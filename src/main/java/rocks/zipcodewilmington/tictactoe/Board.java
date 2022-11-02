@@ -9,9 +9,9 @@ public class Board {
     String[] diag;
     String[] attempts;
     public Board(Character[][] matrix) {
-        this.hori = setHori(matrix);
-        this.vert = setVert(matrix);
-        this.diag = setDiag(matrix);
+        setHori(matrix);
+        setVert(matrix);
+        setDiag(matrix);
     }
 
     public Boolean isInFavorOfX() {
@@ -26,7 +26,7 @@ public class Board {
         if (isInFavorOfO()) {
             return false;
         }
-        if (isInFavorOfX()) {
+        else if (isInFavorOfX()) {
             return false;
         }
         return true;
@@ -43,6 +43,7 @@ public class Board {
     }
 
     public boolean whoWon(String player) {
+        setAttempts();
         String winner = player+player+player;
         for (int i=0; i<attempts.length; i++) {
             if (attempts[i].equals(winner)) {
@@ -52,7 +53,7 @@ public class Board {
         return false;
     }
 
-    public String[] setVert(Character[][] matrix) {
+    public void setVert(Character[][] matrix) {
         vert = new String[3];
         String str = "";
         for (int i=0; i<3; i++) {
@@ -62,7 +63,6 @@ public class Board {
             vert[i] = str;
             str = "";
         }
-        return vert;
     }
 
     public void setHori(Character[][] matrix) {
@@ -86,17 +86,19 @@ public class Board {
         diag[0] = str;
         for (int i=0; i<3; i++) {
             for (int j = 2; j >= 0; j--){
-                str = (matrix[i][i].toString());
+                str = (matrix[i][j].toString());
             }
         }
         diag[1] = str;
     }
 
-    public String[] getAttempts() {
+    public void setAttempts() {
         attempts = new String[8];
         System.arraycopy(vert, 0, attempts, 0, 3);
         System.arraycopy(hori, 0, attempts, 3, 3);
         System.arraycopy(diag, 0, attempts, 6, 2);
-        return attempts;
+//        for (int i=0; i<attempts.length; i++) {
+//            System.out.println(attempts[i]);
+//        }
     }
 }
