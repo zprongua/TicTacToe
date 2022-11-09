@@ -1,7 +1,5 @@
 package rocks.zipcodewilmington.tictactoe;
 
-import com.sun.javafx.collections.ElementObservableListDecorator;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +10,7 @@ public class Board {
     String[] hori = new String[3];
     String[] vert = new String[3];
     String[] diag = new String[2];
-    ArrayList<String> tryThis = new ArrayList<String>();
+    ArrayList<String> attempts = new ArrayList<String>();
     public Board(Character[][] matrix) {
         setHori(matrix);
         setVert(matrix);
@@ -31,10 +29,7 @@ public class Board {
         if (isInFavorOfO()) {
             return false;
         }
-        else if (isInFavorOfX()) {
-            return false;
-        }
-        return true;
+        else return !isInFavorOfX();
     }
 
     public String getWinner() {
@@ -50,7 +45,7 @@ public class Board {
     public boolean whoWon(String player) {
         setAttempts();
         String winner = player+player+player;
-        for (String attempt : this.tryThis) {
+        for (String attempt : this.attempts) {
             if (attempt.equals(winner)) {
                 return true;
             }
@@ -60,45 +55,45 @@ public class Board {
 
     public void setVert(Character[][] matrix) {
         //vert = new String[3];
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                str += matrix[i][j].toString();
+                str.append(matrix[i][j].toString());
             }
-            this.vert[i] = str;
-            str = "";
+            this.vert[i] = str.toString();
+            str = new StringBuilder();
         }
     }
 
     public void setHori(Character[][] matrix) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                 str += matrix[j][i].toString();
+                 str.append(matrix[j][i].toString());
             }
-            this.hori[i] = str;
-            str = "";
+            this.hori[i] = str.toString();
+            str = new StringBuilder();
         }
     }
 
     public void setDiag(Character[][] matrix) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i=0; i<3; i++) {
-            str += (matrix[i][i].toString());
+            str.append(matrix[i][i].toString());
         }
-        this.diag[0] = str;
-        str = "";
+        this.diag[0] = str.toString();
+        str = new StringBuilder();
         int i=0;
         for (int j = 2; j >= 0; j--){
-            str += (matrix[j][i].toString());
+            str.append(matrix[j][i].toString());
             i++;
         }
-        this.diag[1] = str;
+        this.diag[1] = str.toString();
     }
 
     public void setAttempts() {
-        tryThis.addAll(Arrays.asList(this.vert));
-        tryThis.addAll(Arrays.asList(this.hori));
-        tryThis.addAll(Arrays.asList(this.diag));
+        attempts.addAll(Arrays.asList(this.vert));
+        attempts.addAll(Arrays.asList(this.hori));
+        attempts.addAll(Arrays.asList(this.diag));
     }
 }
